@@ -11,7 +11,7 @@
         <view class='box'>
           <form bindsubmit='send_danmu'>
               <input 
-                 value="{{ danmuku_text }}"
+                 value="{{ danmu_text }}"
                 class='flex-item' 
                 id="danmuku_input" 
                 name="danmuku_input"

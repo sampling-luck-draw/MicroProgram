@@ -1,6 +1,22 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+
+function join(userInfo, userLoginInfo) {
+  let data = Object.assign(userInfo, userLoginInfo);
+  console.log(data);
+  wx.request({
+    url: 'https://sampling.alphamj.cn/xcx/join',
+    method: 'POST',
+    header: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }, 
+    data: data,
+    fail: function (c) {
+      console.log(c);
+    }
+  })
+}
 
 Page({
   data: {
@@ -11,7 +27,7 @@ Page({
     danmu_text: "才哥"
   },
   send_danmu: function(e) {
-    console.log(app.globalData.userLoginInfo);
+    //console.log(app.globalData.userLoginInfo);
     wx.request({
       'url': 'https://sampling.alphamj.cn/wx/senddanmu', 
       'method': 'GET',
@@ -29,8 +45,9 @@ Page({
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
-      })
-      console.log(app.globalData.userInfo);
+      });
+      join(this.data.userInfo, app.globalData.userLoginInfo);
+      //console.log(app.globalData.userInfo);
     } else if (this.data.canIUse){
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -38,8 +55,9 @@ Page({
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
-        })
-        console.log(res);
+        });
+        join(this.data.userInfo, app.globalData.userLoginInfo);
+        //console.log(res);
       }
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
@@ -50,9 +68,11 @@ Page({
             userInfo: res.userInfo,
             hasUserInfo: true
           })
+          join(this.data.userInfo, app.globalData.userLoginInfo);
         }
-      })
+      });
     }
+
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -61,5 +81,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+
 })

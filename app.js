@@ -21,7 +21,7 @@ App({
             'code': res.code
           },
           success: res => {
-            console.log(res);
+            // console.log(res);
             this.globalData.userLoginInfo = res.data;
           }
         })
