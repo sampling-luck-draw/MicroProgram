@@ -10,21 +10,8 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log(res.code);
-        wx.request({
-          url: 'https://sampling.alphamj.cn/xcx/login',
-          method: 'POST',
-          header: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }, 
-          data: {
-            'code': res.code
-          },
-          success: res => {
-            // console.log(res);
-            this.globalData.userLoginInfo = res.data;
-          }
-        })
+        // console.log(res.code);
+        this.globalData.code = res.code;
       }
     })
     // 获取用户信息
@@ -49,6 +36,8 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    userLoginInfo: null,  // openid 和 session key
+    userInfoCnt: 0
   }
 })
