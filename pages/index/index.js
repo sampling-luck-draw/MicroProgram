@@ -7,9 +7,6 @@ function join(userInfo) {
   wx.request({
     url: 'https://sampling.alphamj.cn/xcx/login',
     method: 'POST',
-    header: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
     data: {
       'code': app.globalData.code
     },
@@ -23,9 +20,6 @@ function join(userInfo) {
       wx.request({
         url: 'https://sampling.alphamj.cn/xcx/join',
         method: 'POST',
-        header: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
         data: data,
         complete: function (c) {
           console.log('join result')
@@ -45,12 +39,11 @@ Page({
     danmu_text: "才哥"
   },
   send_danmu: function (e) {
-    //console.log(app.globalData.userLoginInfo);
     wx.request({
       'url': 'https://sampling.alphamj.cn/wx/senddanmu',
-      'method': 'GET',
+      'method': 'POST',
       'data': {
-        'uname': this.data.userInfo.nickName,
+        'openid': app.globalData.userLoginInfo.openid,
         'danmu': this.data.danmu_text
       }
     });
