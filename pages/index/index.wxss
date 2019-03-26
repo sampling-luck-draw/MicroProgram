@@ -20,9 +20,22 @@
   margin-top: 200px;
 }
 
-#danmuku_input {
+.block {
+  width: 90%;
+}
+
+/* #danmuku_input {
   border: solid;
   border-color: #aaa;
   height: 100rpx;
   margin-top: 150px;
+  width: 100%;
+} */
+
+
+.weui-input {
+  height: 2.58823529em;
+  min-height: 2.58823529em;
+  line-height: 2.58823529em;
+  margin-top: 50px;
 }

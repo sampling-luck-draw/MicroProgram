@@ -4,28 +4,35 @@ const app = getApp();
 
 function join(userInfo) {
   // 用code换取openid
+  console.log(userInfo);
+  let data = Object.assign(userInfo, { 'code': app.globalData.code });
   wx.request({
     url: 'https://sampling.alphamj.cn/xcx/login',
     method: 'POST',
-    data: {
-      'code': app.globalData.code
-    },
+    data: data,
     complete: res => {
       console.log('login result')
       console.log(res);
       app.globalData.userLoginInfo = res.data;
+    }
+  });
+}
 
-      let data = Object.assign(userInfo, app.globalData.userLoginInfo);
-      // 将个人信息发送到服务器
-      wx.request({
-        url: 'https://sampling.alphamj.cn/xcx/join',
-        method: 'POST',
-        data: data,
-        complete: function (c) {
-          console.log('join result')
-          console.log(c);
-        }
-      })
+function send_danmu(text) {
+  if (text === "")
+    return;
+  console.log(text);
+  return ;
+  wx.request({
+    'url': 'https://sampling.alphamj.cn/xcx/sanddanmu',
+    'method': 'POST',
+    'data': {
+      'openid': app.globalData.userLoginInfo.openid,
+      'danmu': text
+    },
+    complete: function (e) {
+      console.log('send danmu result')
+      console.log(e);
     }
   });
 }
@@ -36,17 +43,18 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    danmu_text: "才哥"
+    danmu_text: ""
   },
-  send_danmu: function (e) {
-    wx.request({
-      'url': 'https://sampling.alphamj.cn/wx/senddanmu',
-      'method': 'POST',
-      'data': {
-        'openid': app.globalData.userLoginInfo.openid,
-        'danmu': this.data.danmu_text
-      }
+  handle_send_button: function (e) {
+    // console.log(e);
+    send_danmu(e.detail.value.danmu_input);
+    this.setData({
+      danmu_text: ""
     });
+  },
+  handle_send_keyboard(e) {
+    // console.log(e);
+    send_danmu(e.detail.value);
     this.setData({
       danmu_text: ""
     });

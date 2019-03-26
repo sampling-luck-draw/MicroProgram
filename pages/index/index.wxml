@@ -3,28 +3,29 @@
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 点击登陆 </button>
     <block wx:else>
-
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-
-
-        <view class='box'>
-          <form bindsubmit='send_danmu'>
-              <input 
-                 value="{{ danmu_text }}"
-                class='flex-item' 
-                id="danmuku_input" 
-                name="danmuku_input"
-                type="text" 
-                confirm-type="send" 
-                placeholder='在此输入弹幕'/>
-              <button class='login' form-type='submit'>发送</button>
-          </form>
-        </view>
-
     </block>
   </view>
+
+
   <view wx:if="{{!hasUserInfo && canIUse}}" class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
+   <view wx:else class='block'>
+      
+      <form bindsubmit='handle_send_button'>
+          <input 
+              value="{{ danmu_text }}"
+              class="weui-input"
+              id="danmu_input" 
+              name="danmu_input"
+              type="text" 
+              confirm-type="send" 
+              auto-focus
+              bindconfirm="handle_send_keyboard"
+              placeholder='在此输入弹幕' />
+          <button class='login' form-type='submit'>发送</button>
+      </form>
+    </view>
 </view>
