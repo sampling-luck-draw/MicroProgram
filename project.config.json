@@ -37,14 +37,28 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 2,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "test sence",
 					"pathName": "pages/index/index",
 					"query": "sence=NEU",
 					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "id=1",
+					"pathName": "pages/index/index",
+					"query": "id=1",
+					"scene": "1047"
+				},
+				{
+					"id": 2,
+					"name": "scanRoom",
+					"pathName": "pages/room/room",
+					"query": "scene=tableld%3D1%26storeld%3D1",
+					"scene": "1047"
 				}
 			]
 		}

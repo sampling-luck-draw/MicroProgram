@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/danmu/danmu",
+    "pages/logs/logs",
+    "pages/room/room"
   ],
   "window": {
     "backgroundTextStyle": "light",

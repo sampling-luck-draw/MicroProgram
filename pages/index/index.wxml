@@ -7,9 +7,10 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
+  </view>
 
 
-  <view wx:if="{{!hasUserInfo && canIUse}}" class="usermotto">
+  <!--<view wx:if="{{!hasUserInfo && canIUse}}" class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
    <view wx:else class='block'>
@@ -29,3 +30,11 @@
       </form>
     </view>
 </view>
+<view>-->
+<view>
+<button bindtap='goRoom'> 进入房间 </button>
+<button bindtap='goDanmu'> 发弹幕 </button></view>
+<view>  
+  <view bindtap="click">点我扫一扫</view>  
+  <view>{{show}}</view>  
+</view> 

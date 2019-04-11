@@ -18,24 +18,7 @@ function join(userInfo) {
   });
 }
 
-function send_danmu(text) {
-  if (text === "")
-    return;
-  console.log(text);
-  return ;
-  wx.request({
-    'url': 'https://sampling.alphamj.cn/xcx/sanddanmu',
-    'method': 'POST',
-    'data': {
-      'openid': app.globalData.userLoginInfo.openid,
-      'danmu': text
-    },
-    complete: function (e) {
-      console.log('send danmu result')
-      console.log(e);
-    }
-  });
-}
+
 
 Page({
   data: {
@@ -45,24 +28,27 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     danmu_text: ""
   },
-  handle_send_button: function (e) {
-    // console.log(e);
-    send_danmu(e.detail.value.danmu_input);
-    this.setData({
-      danmu_text: ""
-    });
+  
+  /**
+   * 进入房间跳转
+   */
+  goRoom:function(){
+    wx.redirectTo({
+      url: '../room/room',
+    })
   },
-  handle_send_keyboard(e) {
-    // console.log(e);
-    send_danmu(e.detail.value);
-    this.setData({
-      danmu_text: ""
-    });
+  /**
+   * 进入弹幕
+   */
+  goDanmu: function () {
+    wx.redirectTo({
+      url: '../danmu/danmu',
+    })
   },
   onLoad: function (query) {
-    console.log(query);
-    let sence = decodeURIComponent(query.scene);
-    console.log(sence);
+    console.log("111111");
+    console.log(app.globalData.userInfo);
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -97,6 +83,20 @@ Page({
         }
       });
     }
+    if (query.scene) {
+      console.log("has scene");
+      var scene = decodeURIComponent(query.scene);
+      console.log("scene is ", scene);
+      var arrPara = scene.split("&");
+      var arr = [];
+      for (var i in arrPara) {
+        arr = arrPara[i].split("=");
+        wx.setStorageSync(arr[0], arr[1]);
+        console.log("setStorageSync:", arr[0], "=", arr[1]);
+      }
+    } else {
+      console.log("no scene");
+    }
 
   },
   getUserInfo: function (e) {
@@ -108,5 +108,40 @@ Page({
     console.log('join 4')
     join(this.data.userInfo, app.globalData.userLoginInfo);
   },
+  /**
+   * 扫描二维码
+   */
+  click: function (option) {
+    var that = this;
+    var show;
+    let qrId;
+    wx.scanCode({
+      success: (res) => {
+        console.log(option)
+        if (option.scene) {
+          qrId = decodeURIComponent(option.scene),
+          console.log(qrId);};
+          
+        this.show = "结果:" + res.result + "二维码类型:" + res.scanType + "字符集:" + res.charSet + "路径:" + res.path;
+        that.setData({
+          show: this.show
+        })
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: (res) => {
+        wx.showToast({
+          title: '失败',
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      complete: (res) => {
+      }
+    })
+  }
 
 })
